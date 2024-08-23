@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Subida</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <div class="container">
+        <h2>Formulario de consultas</h2>
+        <form id="uploadForm">
+            <input type="text" id="name" placeholder="Nombre y Apellido" required>
+            <input type="text" id="affiliateNumber" placeholder="N° de Afiliado (000000/00)" required>
+            <textarea id="consultation" placeholder="Consulta" rows="4" required></textarea>
+            <input type="file" id="fileInput" required>
+            <select id="activity" required>
+                <option value="" disabled selected>Seleccionar Actividad</option>
+                <option value="Aguas y Gaseosas">Aguas y Gaseosas</option>
+                <option value="Caudales">Caudales</option>
+                <option value="Cereales">Cereales</option>
+                <option value="Combustibles">Combustibles</option>
+                <option value="Corralones">Corralones</option>
+                <option value="Correo">Correo</option>
+                <option value="Diarios y Revistas">Diarios y Revistas</option>
+                <option value="Expresos y Mudanzas">Expresos y Mudanzas</option>
+                <option value="Lácteos">Lácteos</option>
+                <option value="Larga Distancia">Larga Distancia</option>
+                <option value="Lavaderos Industriales">Lavaderos Industriales</option>
+                <option value="Logística">Logística</option>
+                <option value="Mecánicos">Mecánicos</option>
+                <option value="Pesados">Pesados</option>
+                <option value="Productos Refrigerados">Productos Refrigerados</option>
+                <option value="Recolección">Recolección</option>
+                <option value="Residuos Industriales">Residuos Industriales</option>
+            </select>
+            <input type="text" id="company" placeholder="Empresa" required>
+            <button type="submit">Enviar</button>
+        </form>
+        <p id="response"></p>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>
