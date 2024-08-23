@@ -1,0 +1,98 @@
+/* Estilos generales del cuerpo */
+body {
+    font-family: 'Arial', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: linear-gradient(135deg, #e0f2f1, #b9fbc0);
+    /* Degradado verde claro */
+}
+
+/* Estilos del contenedor del formulario */
+.container {
+    background-color: white;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
+    width: 90%;
+    max-width: 600px;
+    margin: 20px;
+}
+
+/* Estilos del encabezado del formulario */
+h2 {
+    color: #2e7d32;
+    /* Verde esperanza */
+    margin-bottom: 20px;
+    font-size: 24px;
+    text-align: center;
+}
+
+/* Estilos de los campos de texto, áreas de texto y selección */
+input[type="text"],
+textarea,
+select {
+    width: calc(100% - 22px);
+    /* Ajusta el ancho considerando el padding */
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #b2dfdb;
+    border-radius: 6px;
+    box-sizing: border-box;
+    /* Incluye padding y border en el ancho total */
+    font-size: 16px;
+    background-color: #f1f8f6;
+    /* Fondo muy claro para los campos */
+}
+
+/* Estilos del área de texto */
+textarea {
+    height: 120px;
+    resize: vertical;
+    /* Permite el redimensionamiento vertical */
+}
+
+/* Estilos del campo de archivo */
+input[type="file"] {
+    margin: 10px 0;
+}
+
+/* Estilos del botón de envío */
+button {
+    background-color: #2e7d32;
+    /* Verde esperanza */
+    color: white;
+    border: none;
+    padding: 12px 24px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+/* Estilos del botón en hover */
+button:hover {
+    background-color: #1b5e20;
+    /* Verde más oscuro en hover */
+    transform: translateY(-2px);
+    /* Efecto de elevación en hover */
+}
+
+/* Estilos del mensaje de respuesta */
+#response {
+    margin-top: 15px;
+    font-size: 18px;
+    color: #333;
+    text-align: center;
+}
+
+/* Estilos de los mensajes de error */
+.error {
+    color: #d32f2f;
+    /* Rojo para errores */
+    font-size: 16px;
+    text-align: center;
+    margin-top: 10px;
+}
