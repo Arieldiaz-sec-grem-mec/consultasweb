@@ -4,20 +4,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario de Subida</title>
+    <title>Subir Archivos y Datos</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <div class="container">
-        <h2>Formulario de consultas</h2>
+        <h2>Formulario de Consulta</h2>
         <form id="uploadForm">
-            <input type="text" id="name" placeholder="Nombre y Apellido" required>
-            <input type="text" id="affiliateNumber" placeholder="N° de Afiliado (000000/00)" required>
-            <textarea id="consultation" placeholder="Consulta" rows="4" required></textarea>
-            <input type="file" id="fileInput" required>
-            <select id="activity" required>
-                <option value="" disabled selected>Seleccionar Actividad</option>
+            <label for="nombreApellido">Nombre y Apellido:</label>
+            <input type="text" id="nombreApellido" name="nombreApellido" required>
+
+            <label for="afiliado">Número de Afiliado:</label>
+            <input type="text" id="afiliado" name="afiliado" required pattern="\d{6}/\d{2}">
+
+            <label for="consulta">Consulta:</label>
+            <textarea id="consulta" name="consulta" required></textarea>
+
+            <label for="archivo">Archivo:</label>
+            <input type="file" id="fileInput" name="archivo" required>
+
+            <label for="actividad">Actividad:</label>
+            <select id="actividad" name="actividad" required>
                 <option value="Aguas y Gaseosas">Aguas y Gaseosas</option>
                 <option value="Caudales">Caudales</option>
                 <option value="Cereales">Cereales</option>
@@ -36,7 +44,10 @@
                 <option value="Recolección">Recolección</option>
                 <option value="Residuos Industriales">Residuos Industriales</option>
             </select>
-            <input type="text" id="company" placeholder="Empresa" required>
+
+            <label for="empresa">Empresa:</label>
+            <input type="text" id="empresa" name="empresa" required>
+
             <button type="submit">Enviar</button>
         </form>
         <p id="response"></p>
