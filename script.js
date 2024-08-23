@@ -3,11 +3,11 @@ document.getElementById('uploadForm').addEventListener('submit', function (event
 
     var fileInput = document.getElementById('fileInput');
     var file = fileInput.files[0];
-    var name = document.getElementById('name').value;
-    var affiliateNumber = document.getElementById('affiliateNumber').value;
-    var consultation = document.getElementById('consultation').value;
-    var activity = document.getElementById('activity').value;
-    var company = document.getElementById('company').value;
+    var nombreApellido = document.getElementById('nombreApellido').value;
+    var afiliado = document.getElementById('afiliado').value;
+    var consulta = document.getElementById('consulta').value;
+    var actividad = document.getElementById('actividad').value;
+    var empresa = document.getElementById('empresa').value;
 
     var reader = new FileReader();
 
@@ -20,11 +20,12 @@ document.getElementById('uploadForm').addEventListener('submit', function (event
                 'Content-Type': 'application/x-www-form-urlencoded'
             },
             body: 'file=' + encodeURIComponent(base64File) +
-                '&name=' + encodeURIComponent(name) +
-                '&affiliateNumber=' + encodeURIComponent(affiliateNumber) +
-                '&consultation=' + encodeURIComponent(consultation) +
-                '&activity=' + encodeURIComponent(activity) +
-                '&company=' + encodeURIComponent(company)
+                '&filename=' + encodeURIComponent(file.name) +
+                '&nombre_apellido=' + encodeURIComponent(nombreApellido) +
+                '&afiliado=' + encodeURIComponent(afiliado) +
+                '&consulta=' + encodeURIComponent(consulta) +
+                '&actividad=' + encodeURIComponent(actividad) +
+                '&empresa=' + encodeURIComponent(empresa)
         })
             .then(response => response.text())
             .then(data => {
@@ -32,7 +33,6 @@ document.getElementById('uploadForm').addEventListener('submit', function (event
             })
             .catch(error => {
                 console.error('Error:', error);
-                document.getElementById('response').textContent = 'Error al enviar los datos. Revisa la consola para más detalles.';
             });
     };
 
