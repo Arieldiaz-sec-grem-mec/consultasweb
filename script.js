@@ -8,33 +8,49 @@ document.getElementById('uploadForm').addEventListener('submit', function (event
     var consulta = document.getElementById('consulta').value;
     var actividad = document.getElementById('actividad').value;
     var empresa = document.getElementById('empresa').value;
+    var spinner = document.getElementById('spinner');
+    var response = document.getElementById('response');
 
-    var reader = new FileReader();
+    var formData = new FormData();
+    formData.append('nombre_apellido', nombreApellido);
+    formData.append('afiliado', afiliado);
+    formData.append('consulta', consulta);
+    formData.append('actividad', actividad);
+    formData.append('empresa', empresa);
 
-    reader.onloadend = function () {
-        var base64File = reader.result.split(',')[1]; // Obtener el contenido en base64
+    if (file) {
+        var reader = new FileReader();
+        reader.onloadend = function () {
+            var base64File = reader.result.split(',')[1]; // Obtener el contenido en base64
+            formData.append('file', base64File);
+            formData.append('filename', file.name);
 
-        fetch('https://script.google.com/macros/s/AKfycbyrlbOR6hxAmRj1T7mq2ean8kUW3ONgaWCIQkxOKT4iy5OY1NY2Jyi1YrVkkOD-wszx/exec', { // Reemplaza con la URL de tu script de Google Apps
+            sendData(formData);
+        };
+        reader.readAsDataURL(file);
+    } else {
+        sendData(formData);
+    }
+
+    function sendData(data) {
+        spinner.style.display = 'block'; // Mostrar el spinner
+        fetch('https://script.google.com/macros/s/AKfycbyrlbOR6hxAmRj1T7mq2ean8kUW3ONgaWCIQkxOKT4iy5OY1NY2Jyi1YrVkkOD-wszx/exec', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: 'file=' + encodeURIComponent(base64File) +
-                '&filename=' + encodeURIComponent(file.name) +
-                '&nombre_apellido=' + encodeURIComponent(nombreApellido) +
-                '&afiliado=' + encodeURIComponent(afiliado) +
-                '&consulta=' + encodeURIComponent(consulta) +
-                '&actividad=' + encodeURIComponent(actividad) +
-                '&empresa=' + encodeURIComponent(empresa)
+            body: data
         })
             .then(response => response.text())
             .then(data => {
-                document.getElementById('response').textContent = data;
+                spinner.style.display = 'none'; // Ocultar el spinner
+                response.textContent = "Enviado con éxito";
+                response.className = 'success'; // Aplicar clase de éxito
+                setTimeout(function () {
+                    location.reload(); // Recargar la página
+                }, 2000); // Esperar 2 segundos antes de recargar
             })
             .catch(error => {
-                console.error('Error:', error);
+                spinner.style.display = 'none'; // Ocultar el spinner
+                response.textContent = "Error: " + error.message;
+                response.className = 'error'; // Aplicar clase de error
             });
-    };
-
-    reader.readAsDataURL(file);
+    }
 });
