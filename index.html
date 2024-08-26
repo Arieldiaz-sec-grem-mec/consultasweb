@@ -22,7 +22,7 @@
             <textarea id="consulta" name="consulta" required></textarea>
 
             <label for="archivo">Archivo:</label>
-            <input type="file" id="fileInput" name="archivo" required>
+            <input type="file" id="fileInput" name="archivo">
 
             <label for="actividad">Actividad:</label>
             <select id="actividad" name="actividad" required>
@@ -51,6 +51,7 @@
             <button type="submit">Enviar</button>
         </form>
         <p id="response"></p>
+        <div id="spinner" class="spinner" style="display: none;"></div>
     </div>
     <script src="script.js"></script>
 </body>
