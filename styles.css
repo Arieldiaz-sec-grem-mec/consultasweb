@@ -1,244 +1,62 @@
-/* Estilos generales del cuerpo */
-body {
-    font-family: 'Arial', sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background: linear-gradient(135deg, #e0f2f1, #b9fbc0);
-    /* Degradado verde claro */
-}
+document.getElementById('uploadForm').addEventListener('submit', function (event) {
+    event.preventDefault();
 
-/* Estilos del contenedor del formulario */
-.container {
-    background-color: white;
-    padding: 30px;
-    border-radius: 12px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2), 0 6px 20px rgba(0, 0, 0, 0.19);
-    width: 90%;
-    max-width: 600px;
-    margin: 20px;
-}
+    var fileInput = document.getElementById('fileInput');
+    var file = fileInput.files[0];
+    var nombreApellido = document.getElementById('nombreApellido').value;
+    var afiliado1 = document.getElementById('afiliado1').value;
+    var afiliado2 = document.getElementById('afiliado2').value;
+    var consulta = document.getElementById('consulta').value;
+    var actividad = document.getElementById('actividad').value;
+    var empresa = document.getElementById('empresa').value;
+    var email = document.getElementById('email').value;
+    var spinner = document.getElementById('spinner');
+    var response = document.getElementById('response');
 
-/* Estilos del encabezado del formulario */
-h2 {
-    color: #2e7d32;
-    /* Verde esperanza */
-    margin-bottom: 20px;
-    font-size: 24px;
-    text-align: center;
-}
+    // Combinar los dos campos de afiliado
+    var afiliado = afiliado1 + ',' + afiliado2;
 
-/* Estilos de los campos de texto, áreas de texto y selección */
-input[type="text"],
-textarea,
-select {
-    width: calc(100% - 22px);
-    /* Ajusta el ancho considerando el padding */
-    padding: 12px;
-    margin: 10px 0;
-    border: 1px solid #b2dfdb;
-    border-radius: 6px;
-    box-sizing: border-box;
-    /* Incluye padding y border en el ancho total */
-    font-size: 16px;
-    background-color: #f1f8f6;
-    /* Fondo muy claro para los campos */
-}
+    var formData = new FormData();
+    formData.append('nombre_apellido', nombreApellido);
+    formData.append('afiliado', afiliado);
+    formData.append('consulta', consulta);
+    formData.append('actividad', actividad);
+    formData.append('empresa', empresa);
+    formData.append('email', email);
 
-/* Estilos del área de texto */
-textarea {
-    height: 120px;
-    resize: vertical;
-    /* Permite el redimensionamiento vertical */
-}
+    if (file) {
+        var reader = new FileReader();
+        reader.onloadend = function () {
+            var base64File = reader.result.split(',')[1]; // Obtener el contenido en base64
+            formData.append('file', base64File);
+            formData.append('filename', file.name);
 
-/* Estilos del campo de archivo */
-input[type="file"] {
-    margin: 10px 0;
-    display: block;
-    /* Asegura que el botón se comporte como un bloque para centrarlo */
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-    /* Ajusta el tamaño del botón, puedes cambiar el porcentaje según lo necesites */
-    padding: 10px;
-    /* Ajusta el padding para el tamaño del botón */
-    font-size: 16px;
-    /* Ajusta el tamaño del texto dentro del botón */
-    background-color: #2e7d32;
-    /* Color de fondo del botón */
-    color: white;
-    /* Color del texto */
-    border: none;
-    /* Elimina el borde */
-    border-radius: 5px;
-    /* Redondea las esquinas del botón */
-    cursor: pointer;
-    /* Cambia el cursor al pasar sobre el botón */
-    transition: background-color 0.3s, transform 0.2s;
-    /* Efecto de transición */
-}
-
-input[type="file"]:hover {
-    background-color: #1b5e20;
-    /* Cambia el color del botón al pasar el cursor */
-    transform: translateY(-2px);
-    /* Efecto de elevación en hover */
-}
-
-/* Estilos del botón de envío */
-button {
-    background-color: #2e7d32;
-    /* Verde esperanza */
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 18px;
-    transition: background-color 0.3s, transform 0.2s;
-    margin-top: 20px;
-    float: right;
-    /* Alinea el botón de envío a la derecha */
-}
-
-/* Estilos del botón en hover */
-button:hover {
-    background-color: #1b5e20;
-    /* Verde más oscuro en hover */
-    transform: translateY(-2px);
-    /* Efecto de elevación en hover */
-}
-
-/* Estilos del mensaje de respuesta */
-#response {
-    margin-top: 15px;
-    font-size: 18px;
-    text-align: center;
-}
-
-/* Estilos de los mensajes de éxito */
-.success {
-    color: #2e7d32;
-    font-size: 18px;
-    text-align: center;
-    margin-top: 15px;
-}
-
-/* Estilos del spinner de carga */
-.spinner {
-    border: 4px solid rgba(0, 0, 0, 0.1);
-    border-left: 4px solid #2e7d32;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    animation: spin 1s linear infinite;
-    margin: 20px auto;
-}
-
-/* Animación del spinner */
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
+            sendData(formData);
+        };
+        reader.readAsDataURL(file);
+    } else {
+        sendData(formData);
     }
 
-    100% {
-        transform: rotate(360deg);
+    function sendData(data) {
+        spinner.style.display = 'block'; // Mostrar el spinner
+        fetch('https://script.google.com/macros/s/AKfycbyrlbOR6hxAmRj1T7mq2ean8kUW3ONgaWCIQkxOKT4iy5OY1NY2Jyi1YrVkkOD-wszx/exec', {
+            method: 'POST',
+            body: data
+        })
+            .then(response => response.text())
+            .then(data => {
+                spinner.style.display = 'none'; // Ocultar el spinner
+                response.textContent = "Enviado con éxito";
+                response.className = 'success'; // Aplicar clase de éxito
+                setTimeout(function () {
+                    location.reload(); // Recargar la página
+                }, 2000); // Esperar 2 segundos antes de recargar
+            })
+            .catch(error => {
+                spinner.style.display = 'none'; // Ocultar el spinner
+                response.textContent = "Error: " + error.message;
+                response.className = 'error'; // Aplicar clase de error
+            });
     }
-}
-
-/* Estilos de los campos de texto, áreas de texto y selección */
-input[type="text"],
-input[type="email"],
-textarea,
-select {
-    width: calc(100% - 22px);
-    /* Ajusta el ancho considerando el padding */
-    padding: 12px;
-    margin: 10px 0;
-    border: 1px solid #b2dfdb;
-    border-radius: 6px;
-    box-sizing: border-box;
-    /* Incluye padding y border en el ancho total */
-    font-size: 16px;
-    background-color: #f1f8f6;
-    /* Fondo muy claro para los campos */
-}
-
-/* Estilos del campo de archivo */
-input[type="file"] {
-    margin: 10px 0;
-    display: block;
-    /* Asegura que el botón se comporte como un bloque para centrarlo */
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-    /* Ajusta el tamaño del botón, puedes cambiar el porcentaje según lo necesites */
-    padding: 10px;
-    /* Ajusta el padding para el tamaño del botón */
-    font-size: 16px;
-    /* Ajusta el tamaño del texto dentro del botón */
-    background-color: #2e7d32;
-    /* Color de fondo del botón */
-    color: white;
-    /* Color del texto */
-    border: none;
-    /* Elimina el borde */
-    border-radius: 5px;
-    /* Redondea las esquinas del botón */
-    cursor: pointer;
-    /* Cambia el cursor al pasar sobre el botón */
-    transition: background-color 0.3s, transform 0.2s;
-    /* Efecto de transición */
-}
-
-/* Estilos del botón de envío */
-button {
-    background-color: #2e7d32;
-    /* Verde esperanza */
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 18px;
-    transition: background-color 0.3s, transform 0.2s;
-    margin-top: 20px;
-    float: right;
-    /* Alinea el botón de envío a la derecha */
-}
-
-/* Estilos del botón en hover */
-button:hover {
-    background-color: #1b5e20;
-    /* Verde más oscuro en hover */
-    transform: translateY(-2px);
-    /* Efecto de elevación en hover */
-}
-
-/* Añadir estilos para el contenedor del campo de número de afiliado */
-.afiliado-container {
-    display: flex;
-    align-items: center;
-    margin: 10px 0;
-}
-
-.afiliado-container input {
-    width: 100px;
-    /* Ajusta el tamaño según sea necesario */
-    padding: 12px;
-    margin: 0;
-    border: 1px solid #b2dfdb;
-    border-radius: 6px;
-    box-sizing: border-box;
-    font-size: 16px;
-    background-color: #f1f8f6;
-    text-align: center;
-}
-
-.afiliado-container span {
-    margin: 0 10px;
-    font-size: 16px;
-}
+});
