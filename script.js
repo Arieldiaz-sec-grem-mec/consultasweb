@@ -14,7 +14,7 @@ document.getElementById('uploadForm').addEventListener('submit', function (event
     var response = document.getElementById('response');
 
     // Combinar los dos campos de afiliado
-    var afiliado = afiliado1 + ',' + afiliado2;
+    var afiliado = afiliado1 + '.' + afiliado2;
 
     var formData = new FormData();
     formData.append('nombre_apellido', nombreApellido);
