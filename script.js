@@ -4,12 +4,17 @@ document.getElementById('uploadForm').addEventListener('submit', function (event
     var fileInput = document.getElementById('fileInput');
     var file = fileInput.files[0];
     var nombreApellido = document.getElementById('nombreApellido').value;
-    var afiliado = document.getElementById('afiliado').value;
+    var afiliado1 = document.getElementById('afiliado1').value;
+    var afiliado2 = document.getElementById('afiliado2').value;
     var consulta = document.getElementById('consulta').value;
     var actividad = document.getElementById('actividad').value;
     var empresa = document.getElementById('empresa').value;
+    var email = document.getElementById('email').value;
     var spinner = document.getElementById('spinner');
     var response = document.getElementById('response');
+
+    // Combinar los dos campos de afiliado
+    var afiliado = afiliado1 + ',' + afiliado2;
 
     var formData = new FormData();
     formData.append('nombre_apellido', nombreApellido);
@@ -17,6 +22,7 @@ document.getElementById('uploadForm').addEventListener('submit', function (event
     formData.append('consulta', consulta);
     formData.append('actividad', actividad);
     formData.append('empresa', empresa);
+    formData.append('email', email);
 
     if (file) {
         var reader = new FileReader();
